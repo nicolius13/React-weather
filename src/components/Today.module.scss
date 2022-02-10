@@ -1,0 +1,73 @@
+.temp {
+  font-size: 7rem;
+
+  .tempDeg {
+    font-size: 3rem;
+    opacity: 0.6;
+  }
+}
+
+.iconCol {
+  padding: 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -15%;
+    bottom: 0;
+    right: 0;
+    background: url('../assets/icons/Cloud-background-left.png') no-repeat;
+    background-size: contain;
+    opacity: 0.05;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 70%;
+    bottom: 0;
+    right: 0;
+    background: url('../assets/icons/Cloud-background-right.png') no-repeat;
+    background-size: cover;
+    opacity: 0.05;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .iconCol {
+    &::before {
+      top: 0;
+      left: -5%;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .iconCol {
+    &::before {
+      top: 0;
+      left: -5%;
+      bottom: 0;
+      right: 0;
+    }
+    &::after {
+      right: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .iconCol {
+    &::before {
+      top: 0;
+      left: -25%;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}

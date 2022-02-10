@@ -1,0 +1,19 @@
+.recentSearch {
+  padding: 1rem 0.75rem;
+  border: 1px solid transparent;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  .chevron {
+    color: #616475;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover {
+    border: 1px solid #616475;
+
+    .chevron {
+      opacity: 1;
+    }
+  }
+}
