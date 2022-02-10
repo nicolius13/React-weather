@@ -1,0 +1,33 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+$clr-dark: #100e1d;
+$clr-light: #e7e7eb;
+$clr-blueBack: #1e213a;
+
+body {
+  background: $clr-dark;
+  color: $clr-light;
+  font-family: 'Raleway', sans-serif;
+}
+
+.mainContainer {
+  height: 100vh;
+}
+
+.mainRow {
+  height: 100%;
+}
+
+.blueBack {
+  background-color: $clr-blueBack;
+  padding: 15px;
+}
+
+.progress-bar {
+  background-color: #ffec65;
+}
