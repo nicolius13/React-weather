@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getWeather, getLocation } from './api/weather';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,13 +10,10 @@ import Today from './components/Today';
 import TempBtn from './components/ui/TempBtn';
 import NextDays from './components/NextDays';
 import SideBar from './components/ui/SideBar';
-
-// TESTING
-import testRes, { loca } from './assets/res.js';
-
 // Types
 import { Day } from './components/ui/DayPrevision';
 import Hightlights from './components/Hightlights';
+
 export type Weather = {
   current: {
     temp: number;
@@ -40,18 +38,19 @@ const App: React.FC = () => {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [location, setLocation] = useState<Location>(null);
 
-  const apiKey = '60eb3e8bdb2d085deb038fde4091c6d9';
-
   useEffect(() => {
     // ask for the geolocalisation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        pos => {
+        async pos => {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
           // search the area given by the geoloc
-          getWeather(lat, lng);
-          getLocation(lat, lng);
+          const weath = await getWeather(lat, lng);
+          setWeather(weath);
+
+          const loc = await getLocation(lat, lng);
+          setLocation(loc);
         },
         () => {
           // denied geoloc
@@ -75,35 +74,6 @@ const App: React.FC = () => {
         "Your browser doesn't support geolocation. You can search for specific cities by clicking 'Search for places' button."
       );
     }
-  };
-
-  const getWeather = (lat: number, lng: number) => {
-    // Local test
-    // setTimeout(() => {
-    //   setWeather(testRes);
-    // }, 2000);
-    fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly,alerts&appid=${apiKey}`
-    )
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        data.daily.splice(-3);
-        setWeather(data);
-      });
-  };
-
-  const getLocation = (lat: number, lng: number) => {
-    // Local test
-    // setLocation(loca);
-    fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${apiKey}`)
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        setLocation(data);
-      });
   };
 
   return (

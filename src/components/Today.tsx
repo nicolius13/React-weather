@@ -37,8 +37,6 @@ const Today: React.FC<props> = props => {
 
   const date = getDate(0);
 
-  console.log(props.location ? props.location : '');
-
   return (
     <Row>
       <Col xs={8}>
