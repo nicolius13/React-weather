@@ -37,6 +37,8 @@ const Today: React.FC<props> = props => {
 
   const date = getDate(0);
 
+  console.log(props.location ? props.location : '');
+
   return (
     <Row>
       <Col xs={8}>
@@ -59,7 +61,7 @@ const Today: React.FC<props> = props => {
         </h1>
         <h2 className="opacity-75 fs-2">{weather.weather[0].description}</h2>
         <p className="mb-0 opacity-50">Today . {date}</p>
-        <p className="opacity-50">{props.location ? props.location.name : ''}</p>
+        <p className="opacity-50">{props.location ? props.location[0].name : ''}</p>
       </Col>
     </Row>
   );

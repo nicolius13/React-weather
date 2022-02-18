@@ -29,9 +29,11 @@ export type Weather = {
   daily: Day[];
 };
 
-export type Location = {
-  name: string;
-} | null;
+export type Location =
+  | {
+      name: string;
+    }[]
+  | null;
 
 const App: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -56,7 +58,7 @@ const App: React.FC = () => {
           handleLocationError(true);
           // if it's at start-up and fail => get brussels weather
           getWeather(4.4291, 50.8439);
-          setLocation({ name: 'Bruxelles' });
+          setLocation([{ name: 'Bruxelles' }]);
         }
       );
     }

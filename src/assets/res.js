@@ -1,50 +1,3 @@
-const res = {
-  coord: {
-    lng: 4.4291,
-    lat: 50.8439,
-  },
-  weather: [
-    {
-      id: 500,
-      main: 'Rain',
-      description: 'light rain',
-      icon: '10d',
-    },
-  ],
-  base: 'stations',
-  main: {
-    temp: 280.6,
-    feels_like: 278.9,
-    temp_min: 279.48,
-    temp_max: 281.44,
-    pressure: 1021,
-    humidity: 83,
-  },
-  visibility: 10000,
-  wind: {
-    speed: 2.57,
-    deg: 300,
-  },
-  rain: {
-    '1h': 0.17,
-  },
-  clouds: {
-    all: 40,
-  },
-  dt: 1644505037,
-  sys: {
-    type: 1,
-    id: 1227,
-    country: 'BE',
-    sunrise: 1644476654,
-    sunset: 1644511736,
-  },
-  timezone: 3600,
-  id: 2787931,
-  name: 'Rodebeek',
-  cod: 200,
-};
-
 const res2 = {
   lat: 50.8439,
   lon: 4.4291,
@@ -173,18 +126,20 @@ const res2 = {
   ],
 };
 
-export const loca = {
-  name: 'Woluwe-Saint-Lambert - Sint-Lambrechts-Woluwe',
-  local_names: {
-    wa: 'Woluwé-Sint-Lambiet',
-    fr: 'Woluwe-Saint-Lambert',
-    la: 'Wolua Sancti Lamberti',
-    nl: 'Sint-Lambrechts-Woluwe',
-    ru: 'Волюве-Сен-Ламбер',
+export const loca = [
+  {
+    name: 'Woluwe-Saint-Lambert - Sint-Lambrechts-Woluwe',
+    local_names: {
+      wa: 'Woluwé-Sint-Lambiet',
+      fr: 'Woluwe-Saint-Lambert',
+      la: 'Wolua Sancti Lamberti',
+      nl: 'Sint-Lambrechts-Woluwe',
+      ru: 'Волюве-Сен-Ламбер',
+    },
+    lat: 50.8430448,
+    lon: 4.4256732,
+    country: 'BE',
   },
-  lat: 50.8430448,
-  lon: 4.4256732,
-  country: 'BE',
-};
+];
 
 export default res2;
