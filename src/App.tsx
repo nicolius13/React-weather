@@ -17,7 +17,15 @@ import testRes, { loca } from './assets/res.js';
 import { Day } from './components/ui/DayPrevision';
 import Hightlights from './components/Hightlights';
 export type Weather = {
-  current: { temp: number; weather: { description: string; icon: string }[] };
+  current: {
+    temp: number;
+    wind_speed: number;
+    wind_deg: number;
+    humidity: number;
+    visibility: number;
+    pressure: number;
+    weather: { description: string; icon: string }[];
+  };
   daily: Day[];
 };
 
@@ -69,31 +77,31 @@ const App: React.FC = () => {
 
   const getWeather = (lat: number, lng: number) => {
     // Local test
-    setTimeout(() => {
-      setWeather(testRes);
-    }, 20000);
-    // fetch(
-    //   `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly,alerts&appid=${apiKey}`
-    // )
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     data.daily.splice(-3);
-    //     setWeather(data);
-    //   });
+    // setTimeout(() => {
+    //   setWeather(testRes);
+    // }, 2000);
+    fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly,alerts&appid=${apiKey}`
+    )
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        data.daily.splice(-3);
+        setWeather(data);
+      });
   };
 
   const getLocation = (lat: number, lng: number) => {
     // Local test
-    setLocation(loca);
-    // fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${apiKey}`)
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     setLocation(data);
-    //   });
+    // setLocation(loca);
+    fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${apiKey}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setLocation(data);
+      });
   };
 
   return (

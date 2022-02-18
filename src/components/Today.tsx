@@ -26,13 +26,13 @@ type props = {
 };
 
 const Today: React.FC<props> = props => {
-  const weather = props.weather;
+  const weather = props.weather.current;
 
   const tempCtx = useContext(TempContext);
 
-  const temp = useTemp(weather.current.temp);
+  const temp = useTemp(weather.temp);
 
-  const imgKey = weather.current.weather[0].icon as IconCodeKey;
+  const imgKey = weather.weather[0].icon as IconCodeKey;
   const img = iconCode[imgKey];
 
   const date = getDate(0);
@@ -57,7 +57,7 @@ const Today: React.FC<props> = props => {
           {temp}
           <span className={classes.tempDeg}>°{tempCtx.tempType}</span>
         </h1>
-        <h2 className="opacity-75 fs-2">{weather.current.weather[0].description}</h2>
+        <h2 className="opacity-75 fs-2">{weather.weather[0].description}</h2>
         <p className="mb-0 opacity-50">Today . {date}</p>
         <p className="opacity-50">{props.location ? props.location.name : ''}</p>
       </Col>
