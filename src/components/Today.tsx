@@ -8,10 +8,8 @@ import getDate from '../helpers/getDate';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-// Icon
-import { BiCurrentLocation } from 'react-icons/bi';
+
 import iconCode from '../assets/iconCode';
 // Style
 import classes from './Today.module.scss';
@@ -23,7 +21,6 @@ type IconCodeKey = keyof typeof iconCode;
 
 type props = {
   weather: Weather;
-  onClick: () => void;
   location: Geoloc;
 };
 
@@ -41,16 +38,6 @@ const Today: React.FC<props> = props => {
 
   return (
     <Row>
-      <Col xs={8}>
-        <Button variant="secondary" onClick={props.onClick}>
-          Search for places
-        </Button>
-      </Col>
-      <Col className="text-end">
-        <Button variant="secondary">
-          <BiCurrentLocation />
-        </Button>
-      </Col>
       <Col className={`text-center d-flex ${classes.iconCol}`} xs={12}>
         <Image className="m-auto" src={require(`../assets/icons/${img}`)} />
       </Col>

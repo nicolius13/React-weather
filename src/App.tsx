@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getWeather, getLocation } from './api/weather';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+// Icon
+import { BiCurrentLocation } from 'react-icons/bi';
 // Component
 import Today from './components/Today';
 import TempBtn from './components/ui/TempBtn';
@@ -36,46 +39,55 @@ const App: React.FC = () => {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [location, setLocation] = useState<Geoloc | null>(null);
 
+  const handleGeoloc = useCallback(() => {
+    navigator.geolocation.getCurrentPosition(
+      async pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        // search the area given by the geoloc
+        const weath = await getWeather(lat, lng);
+        setWeather(weath);
+
+        const loc = await getLocation(lat, lng);
+        setLocation(loc);
+      },
+      async () => {
+        // denied geoloc
+        handleLocationError(true);
+        // if it's at start-up and fail => get brussels weather
+        const weath = await getWeather(4.4291, 50.8439);
+        setWeather(weath);
+        setLocation({
+          name: 'Bruxelles',
+          lat: 50.8430448,
+          lon: 4.4256732,
+          country: 'BE',
+        });
+      }
+    );
+  }, []);
+
   useEffect(() => {
     // ask for the geolocalisation
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async pos => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          // search the area given by the geoloc
-          const weath = await getWeather(lat, lng);
-          setWeather(weath);
-
-          const loc = await getLocation(lat, lng);
-          setLocation(loc);
-        },
-        () => {
-          // denied geoloc
-          handleLocationError(true);
-          // if it's at start-up and fail => get brussels weather
-          getWeather(4.4291, 50.8439);
-          setLocation({
-            name: 'Bruxelles',
-            lat: 50.8430448,
-            lon: 4.4256732,
-            country: 'BE',
-          });
-        }
-      );
+      handleGeoloc();
+    } else {
+      handleLocationError(false);
     }
-  }, []);
+  }, [handleGeoloc]);
 
-  // open a modal if the geoloc is refuse or not supported
+  // show toast if the geoloc is refuse or not supported
   const handleLocationError = (browserHasGeoloc: boolean) => {
     if (browserHasGeoloc) {
-      window.alert(
+      setErrorText(
         "The Geolocation service failed. You can search for specific cities by clicking 'Search for places' button."
       );
+      setShowToast(true);
     } else {
-      window.alert(
+      setErrorText(
         "Your browser doesn't support geolocation. You can search for specific cities by clicking 'Search for places' button."
       );
+      setShowToast(true);
     }
   };
 
@@ -94,8 +106,20 @@ const App: React.FC = () => {
       <Container className="mainContainer" fluid>
         <Row className="mainRow">
           <Col className="py-4 no-gutters d-lg-flex blueBack" xs={12} lg={4} xl={3}>
+            <Row>
+              <Col xs={8}>
+                <Button variant="secondary" onClick={() => setShowSideBar(true)}>
+                  Search for places
+                </Button>
+              </Col>
+              <Col className="text-end">
+                <Button variant="secondary" onClick={handleGeoloc}>
+                  <BiCurrentLocation />
+                </Button>
+              </Col>
+            </Row>
             {weather && location ? (
-              <Today weather={weather} location={location} onClick={() => setShowSideBar(true)} />
+              <Today weather={weather} location={location} />
             ) : (
               <Row className="full-height align-items-center">
                 <Col className="text-center">
