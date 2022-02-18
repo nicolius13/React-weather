@@ -1,16 +1,16 @@
+import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
+import TempContext from '../../store/tempContext';
 
-type TempBtnProps = {
-  onClick: (arg: string) => void;
-};
+const TempBtn: React.FC = () => {
+  const tempCtx = useContext(TempContext);
 
-const TempBtn: React.FC<TempBtnProps> = props => {
   return (
     <div className="text-end">
-      <Button className="me-2" variant="secondary" onClick={() => props.onClick('cel')}>
+      <Button className="me-2" variant="secondary" onClick={() => tempCtx.updateTempType('C')}>
         °C
       </Button>
-      <Button variant="secondary" onClick={() => props.onClick('far')}>
+      <Button variant="secondary" onClick={() => tempCtx.updateTempType('F')}>
         °F
       </Button>
     </div>
