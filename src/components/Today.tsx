@@ -15,14 +15,16 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import iconCode from '../assets/iconCode';
 // Style
 import classes from './Today.module.scss';
-import { Location, Weather } from '../App';
+// Types
+import { Weather } from '../App';
+import { Geoloc } from './ui/SideBar';
 
 type IconCodeKey = keyof typeof iconCode;
 
 type props = {
   weather: Weather;
   onClick: () => void;
-  location: Location;
+  location: Geoloc;
 };
 
 const Today: React.FC<props> = props => {
@@ -59,7 +61,7 @@ const Today: React.FC<props> = props => {
         </h1>
         <h2 className="opacity-75 fs-2">{weather.weather[0].description}</h2>
         <p className="mb-0 opacity-50">Today . {date}</p>
-        <p className="opacity-50">{props.location ? props.location[0].name : ''}</p>
+        <p className="opacity-50">{props.location ? props.location.name : ''}</p>
       </Col>
     </Row>
   );

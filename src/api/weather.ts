@@ -1,5 +1,5 @@
-// TESTING
-import { Location, Weather } from '../App.js';
+// Types
+import { Weather } from '../App.js';
 import { Geoloc } from '../components/ui/SideBar.js';
 
 const apiKey = '60eb3e8bdb2d085deb038fde4091c6d9';
@@ -15,19 +15,18 @@ export const getWeather = async (lat: number, lng: number): Promise<Weather> => 
   return data;
 };
 
-export const getLocation = async (lat: number, lng: number): Promise<Location> => {
+export const getLocation = async (lat: number, lng: number): Promise<Geoloc> => {
   const res = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${apiKey}`);
 
   const data = await res.json();
 
-  return data;
+  return data[0];
 };
 
 export const getGeoLoc = async (place: string): Promise<Geoloc> => {
   const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${place}&appid=${apiKey}`);
 
   const data = await res.json();
-  console.log(data);
 
-  return data;
+  return data[0];
 };
