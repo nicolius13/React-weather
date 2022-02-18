@@ -8,6 +8,9 @@ export const getWeather = async (lat: number, lng: number): Promise<Weather> => 
   const res = await fetch(
     `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly,alerts&appid=${apiKey}`
   );
+  if (res.status === 429) {
+    window.alert('API unavailable');
+  }
 
   const data = await res.json();
 
@@ -17,6 +20,9 @@ export const getWeather = async (lat: number, lng: number): Promise<Weather> => 
 
 export const getLocation = async (lat: number, lng: number): Promise<Geoloc> => {
   const res = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${apiKey}`);
+  if (res.status === 429) {
+    window.alert('API unavailable');
+  }
 
   const data = await res.json();
 
@@ -25,7 +31,9 @@ export const getLocation = async (lat: number, lng: number): Promise<Geoloc> => 
 
 export const getGeoLoc = async (place: string): Promise<Geoloc> => {
   const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${place}&appid=${apiKey}`);
-
+  if (res.status === 429) {
+    window.alert('API unavailable');
+  }
   const data = await res.json();
 
   return data[0];
